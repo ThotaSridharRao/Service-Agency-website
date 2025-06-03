@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for smooth progress bar transition */
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+        /* Ensure the body uses the Inter font for a modern look */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans text-gray-800">
+
+    <header class="bg-indigo-600 text-white p-4 shadow-lg rounded-b-xl">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl font-extrabold tracking-tight">Your Company Name - Service Status</h1>
+            <p class="mt-1 text-lg opacity-90">Real-time updates on your vehicle's service progress.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <div class="bg-white shadow-2xl rounded-xl p-6 md:p-8">
+
+            <section class="mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                <h2 class="text-2xl font-bold text-indigo-700 mb-4 border-b pb-2 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.586l1.293 1.293a1 1 0 01-1.414 1.414l-2.293-2.293a1 1 0 01-.707-.293l-2.293 2.293a1 1 0 01-1.414-1.414L7.586 15H5a2 2 0 01-2-2V5zm12 0H5v8h10V5z" clipRule="evenodd"></path>
+                    </svg>
+                    Vehicle Information
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-lg">
+                    <div>
+                        <strong class="text-gray-700">Make:</strong>
+                        <span class="text-gray-600 ml-2" id="vehicle-make">Toyota</span>
+                    </div>
+                    <div>
+                        <strong class="text-gray-700">Model:</strong>
+                        <span class="text-gray-600 ml-2" id="vehicle-model">Camry</span>
+                    </div>
+                    <div>
+                        <strong class="text-gray-700">Year:</strong>
+                        <span class="text-gray-600 ml-2" id="vehicle-year">2021</span>
+                    </div>
+                    <div>
+                        <strong class="text-gray-700">VIN:</strong>
+                        <span class="text-gray-600 ml-2" id="vehicle-vin">JT1BFRE0XML0XXXXX</span>
+                    </div>
+                    <div>
+                        <strong class="text-gray-700">License Plate:</strong>
+                        <span class="text-gray-600 ml-2" id="vehicle-plate">ABC-123</span>
+                    </div>
+                    <div>
+                        <strong class="text-gray-700">Service Advisor:</strong>
+                        <span class="text-gray-600 ml-2" id="service-advisor">John Doe</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                <h2 class="text-2xl font-bold text-indigo-700 mb-4 border-b pb-2 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
+                    </svg>
+                    Service Progress
+                </h2>
+
+                <div class="mb-6">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-base font-medium text-blue-700">Overall Progress</span>
+                        <span class="text-sm font-medium text-blue-700" id="progress-percentage">75%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-6">
+                        <div id="progress-bar-fill" class="bg-blue-600 h-6 rounded-full text-xs font-medium text-blue-100 text-center p-0.5 leading-none progress-bar-fill" style="width: 75%;">
+                            75%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Tasks:</h3>
+                    <ul id="task-list" class="list-disc list-inside pl-4 space-y-2">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-gray-700">Initial Inspection & Diagnostics</span> - <span class="text-green-600 font-medium">Completed</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-gray-700">Oil Change and Filter Replacement</span> - <span class="text-green-600 font-medium">Completed</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-yellow-500 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9H4V4m.582 5H4a2 2 0 00-2 2v3a2 2 0 002 2h12a2 2 0 002-2v-3a2 2 0 00-2-2h-1.582m-10.836-3.26A8.001 8.001 0 0019.418 9H20V4m-4.582 5H20a2 2 0 012 2v3a2 2 0 01-2 2H8a2 2 0 01-2-2v-3a2 2 0 012-2h1.418z"></path>
+                            </svg>
+                            <span class="text-gray-700">Tire Rotation and Balancing</span> - <span class="text-yellow-600 font-medium">In Progress</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-gray-700">Brake Pad Replacement (Rear)</span> - <span class="text-gray-500 font-medium">Pending</span>
+                        </li>
+                        <li class="flex items-center">
+                             <svg class="w-5 h-5 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-gray-700">Full Vehicle Wash and Detailing</span> - <span class="text-gray-500 font-medium">Pending</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                <h2 class="text-2xl font-bold text-indigo-700 mb-4 border-b pb-2 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V7z" clipRule="evenodd"></path>
+                    </svg>
+                    Timeline & Notes
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-lg">
+                    <div>
+                        <strong class="text-gray-700">Estimated Completion:</strong>
+                        <span class="text-gray-600 ml-2" id="estimated-completion">Today, 5:00 PM</span>
+                    </div>
+                    <div>
+                        <strong class="text-gray-700">Last Updated:</strong>
+                        <span class="text-gray-600 ml-2" id="last-updated">July 26, 2023, 2:30 PM</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <strong class="text-gray-700">Notes from Technician:</strong>
+                    <p class="text-gray-600 mt-1 p-3 bg-gray-100 rounded-md border border-gray-200" id="technician-notes">
+                        Rear brake pads have about 20% life remaining. Recommended replacement during this visit. Client approved.
+                        Waiting on parts for brake replacement, expected arrival by 3:00 PM.
+                    </p>
+                </div>
+            </section>
+
+            <section class="mt-8 pt-6 border-t border-gray-200">
+                <h2 class="text-xl font-semibold text-indigo-700 mb-3 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Need More Done?
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    If you'd like to add more services to your current visit, you can request them here. Please note that adding services may affect your estimated completion time and cost. We will confirm any changes with you.
+                </p>
+                <a href="/request-additional-services.html"
+                   class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-150">
+                    <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Request Additional Services
+                </a>
+            </section>
+
+            <section class="mt-8 pt-6 border-t border-gray-200">
+                <h2 class="text-xl font-semibold text-indigo-700 mb-3">Questions?</h2>
+                <p class="text-gray-600">
+                    If you have any questions regarding your service, please contact your service advisor, <span id="contact-advisor-name" class="font-medium text-indigo-600">John Doe</span>, at <a href="tel:555-123-4567" class="text-blue-600 hover:underline">(555) 123-4567</a> or reply to your service update email.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="text-center p-4 text-gray-600 mt-8">
+        © <span id="current-year">2023</span> Your Company Name. All rights reserved.
+    </footer>
+
+    <script>
+        // Set the current year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // --- JavaScript for Dynamic Content (Uncomment and adapt for real API calls) ---
+        /*
+        // Example data structure that would come from an API
+        const mockServiceData = {
+            vehicle: {
+                make: 'Toyota',
+                model: 'Camry',
+                year: 2021,
+                vin: 'JT1BFRE0XML0XXXXX',
+                licensePlate: 'ABC-123',
+            },
+            serviceAdvisor: {
+                name: 'Jane Smith',
+                phone: '(555) 987-6543',
+            },
+            progress: {
+                overallPercentage: 80,
+                tasks: [
+                    { name: 'Initial Inspection & Diagnostics', status: 'Completed' },
+                    { name: 'Oil Change and Filter Replacement', status: 'Completed' },
+                    { name: 'Tire Rotation and Balancing', status: 'Completed' },
+                    { name: 'Brake Pad Replacement (Rear)', status: 'In Progress' },
+                    { name: 'Full Vehicle Wash and Detailing', status: 'Pending' },
+                ],
+            },
+            timeline: {
+                estimatedCompletion: 'Today, 6:00 PM',
+                lastUpdated: '2025-06-02T14:30:00Z', // ISO 8601 format
+            },
+            notes: 'Rear brake pads are being replaced. Parts arrived. Detailing will begin after brake work is complete.',
+        };
+
+        function updatePageContent(data) {
+            // Update Vehicle Information
+            document.getElementById('vehicle-make').textContent = data.vehicle.make;
+            document.getElementById('vehicle-model').textContent = data.vehicle.model;
+            document.getElementById('vehicle-year').textContent = data.vehicle.year;
+            document.getElementById('vehicle-vin').textContent = data.vehicle.vin;
+            document.getElementById('vehicle-plate').textContent = data.vehicle.licensePlate;
+            document.getElementById('service-advisor').textContent = data.serviceAdvisor.name;
+            document.getElementById('contact-advisor-name').textContent = data.serviceAdvisor.name;
+
+            // Update Progress Bar
+            const progress = data.progress.overallPercentage;
+            document.getElementById('progress-percentage').textContent = `${progress}%`;
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            progressBarFill.style.width = `${progress}%`;
+            progressBarFill.textContent = `${progress}%`;
+
+            // Update Task List
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = ''; // Clear existing tasks
+            data.progress.tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center';
+
+                let iconSvg = '';
+                let statusClass = '';
+                if (task.status === 'Completed') {
+                    iconSvg = `<svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>`;
+                    statusClass = 'text-green-600 font-medium';
+                } else if (task.status === 'In Progress') {
+                    iconSvg = `<svg class="w-5 h-5 text-yellow-500 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9H4V4m.582 5H4a2 2 0 00-2 2v3a2 2 0 002 2h12a2 2 0 002-2v-3a2 2 0 00-2-2h-1.582m-10.836-3.26A8.001 8.001 0 0019.418 9H20V4m-4.582 5H20a2 2 0 012 2v3a2 2 0 01-2 2H8a2 2 0 01-2-2v-3a2 2 0 012-2h1.418z"></path></svg>`;
+                    statusClass = 'text-yellow-600 font-medium';
+                } else { // Pending
+                    iconSvg = `<svg class="w-5 h-5 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>`;
+                    statusClass = 'text-gray-500 font-medium';
+                }
+
+                li.innerHTML = `
+                    ${iconSvg}
+                    <span class="text-gray-700">${task.name}</span> - <span class="${statusClass}">${task.status}</span>
+                `;
+                taskList.appendChild(li);
+            });
+
+            // Update Timeline & Notes
+            document.getElementById('estimated-completion').textContent = data.timeline.estimatedCompletion;
+            document.getElementById('last-updated').textContent = new Date(data.timeline.lastUpdated).toLocaleString();
+            document.getElementById('technician-notes').textContent = data.notes || 'No specific notes at this time.';
+        }
+
+        // Function to fetch data from an API
+        async function fetchServiceStatus(serviceId) {
+            try {
+                // Replace with your actual API endpoint
+                const response = await fetch(`/api/service-status/${serviceId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                updatePageContent(data); // Update the page with fetched data
+            } catch (error) {
+                console.error("Failed to fetch service status:", error);
+                const mainContent = document.querySelector('main .container');
+                mainContent.innerHTML = `<div class="text-center text-red-500 p-8">
+                                            <h2 class="text-2xl font-semibold mb-2">Error Loading Status</h2>
+                                            <p>Could not retrieve service status. Please try again later or contact support.</p>
+                                         </div>`;
+            }
+        }
+
+        // Example: Get service ID from URL query parameter (e.g., status.html?serviceId=12345)
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceId = urlParams.get('serviceId');
+
+        // On page load, check for service ID and either fetch data or display static example
+        window.onload = function() {
+            if (serviceId) {
+                fetchServiceStatus(serviceId); // Call this in a real application
+                console.log("Service ID found:", serviceId, "- Uncomment fetchServiceStatus to make a real API call.");
+                // For demonstration, use mock data if no real API call is made
+                updatePageContent(mockServiceData);
+            } else {
+                console.log("No service ID provided in URL. Displaying static example data.");
+                updatePageContent(mockServiceData); // Display mock data by default
+            }
+        };
+        */
+    </script>
+</body>
+</html>
