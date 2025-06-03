@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff - Update Service Progress</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for better form element appearance and overall font */
+        body {
+            font-family: 'Inter', sans-serif; /* Consistent font */
+        }
+        select, input[type="text"], input[type="number"], input[type="datetime-local"], textarea {
+            /* Apply Tailwind classes for consistent styling */
+            @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2;
+        }
+        label {
+            /* Apply Tailwind classes for consistent styling */
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+        /* Style for the custom message box */
+        #message-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #message-box.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 font-sans">
+
+    <div id="message-box"></div>
+
+    <header class="bg-indigo-700 text-white p-4 shadow-lg rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">MechanicApp - Staff Portal</h1>
+            <div>
+                <span class="text-sm">Logged in as: <strong id="staff-name">Jane Mechanic</strong></span>
+                <a href="/staff-logout" class="ml-4 text-indigo-200 hover:text-white text-sm transition-colors duration-150">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <div class="bg-white shadow-2xl rounded-xl p-6 md:p-8">
+
+            <form id="updateServiceForm">
+                <section class="mb-8 pb-6 border-b border-gray-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                            <svg class="w-7 h-7 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd"></path>
+                            </svg>
+                            Update Service Progress
+                        </h2>
+                        <span class="text-lg font-medium text-gray-700">
+                            Order ID: <strong id="service-order-id" class="text-indigo-600">SO-12345</strong>
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 text-sm">
+                        <div>
+                            <strong class="text-gray-600">Vehicle:</strong>
+                            <span id="vehicle-info" class="ml-1 text-gray-800">2021 Toyota Camry (ABC-123)</span>
+                        </div>
+                        <div>
+                            <strong class="text-gray-600">VIN:</strong>
+                            <span id="vehicle-vin" class="ml-1 text-gray-800">JT1BFRE0XML0XXXXX</span>
+                        </div>
+                        <div>
+                            <strong class="text-gray-600">Customer:</strong>
+                            <span id="customer-name" class="ml-1 text-gray-800">John Customer</span>
+                        </div>
+                        <div>
+                            <strong class="text-gray-600">Service Advisor:</strong>
+                            <span id="service-advisor" class="ml-1 text-gray-800">Sarah Advisor</span>
+                        </div>
+                        <div>
+                            <strong class="text-gray-600">Date In:</strong>
+                            <span id="date-in" class="ml-1 text-gray-800">2023-07-26 09:00 AM</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Overall Status</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="overall-progress">Overall Progress (%):</label>
+                            <input type="number" id="overall-progress" name="overallProgress" min="0" max="100" value="75">
+                        </div>
+                        <div>
+                            <label for="estimated-completion">New Estimated Completion:</label>
+                            <input type="datetime-local" id="estimated-completion" name="estimatedCompletion" value="2023-07-26T17:00">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-8">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-semibold text-gray-700">Service Tasks</h3>
+                        <button type="button" id="addNewTaskBtn" class="inline-flex items-center text-sm bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition-colors duration-150">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V4a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Add New Task
+                        </button>
+                    </div>
+                    <div id="tasksContainer" class="space-y-4">
+                        <div class="task-item p-4 bg-gray-50 rounded-md border border-gray-200">
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                                <div class="md:col-span-5">
+                                    <label for="task-name-1">Task Name:</label>
+                                    <input type="text" id="task-name-1" name="tasks[0][name]" value="Initial Inspection & Diagnostics" class="bg-gray-100" readonly>
+                                </div>
+                                <div class="md:col-span-3">
+                                    <label for="task-status-1">Status:</label>
+                                    <select id="task-status-1" name="tasks[0][status]">
+                                        <option value="Pending">Pending</option>
+                                        <option value="InProgress">In Progress</option>
+                                        <option value="Completed" selected>Completed</option>
+                                        <option value="OnHold">On Hold</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="md:col-span-3">
+                                    <label for="task-notes-1">Task Notes (Optional):</label>
+                                    <input type="text" id="task-notes-1" name="tasks[0][notes]" placeholder="e.g., All systems nominal." value="All systems nominal.">
+                                </div>
+                                <div class="md:col-span-1 flex items-end justify-center">
+                                    <button type="button" class="removeTaskBtn text-red-500 hover:text-red-700 p-2 transition-colors duration-150" title="Remove Task (for newly added tasks)">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="task-item p-4 bg-gray-50 rounded-md border border-gray-200">
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                                <div class="md:col-span-5">
+                                    <label for="task-name-2">Task Name:</label>
+                                    <input type="text" id="task-name-2" name="tasks[1][name]" value="Oil Change and Filter Replacement" class="bg-gray-100" readonly>
+                                </div>
+                                <div class="md:col-span-3">
+                                    <label for="task-status-2">Status:</label>
+                                    <select id="task-status-2" name="tasks[1][status]">
+                                        <option value="Pending">Pending</option>
+                                        <option value="InProgress" selected>In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="OnHold">On Hold</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="md:col-span-3">
+                                    <label for="task-notes-2">Task Notes (Optional):</label>
+                                    <input type="text" id="task-notes-2" name="tasks[1][notes]" placeholder="e.g., Used 5W-30 synthetic" value="Used 5W-30 synthetic.">
+                                </div>
+                                <div class="md:col-span-1 flex items-end justify-center">
+                                    <button type="button" class="removeTaskBtn text-red-500 hover:text-red-700 p-2 transition-colors duration-150" title="Remove Task (for newly added tasks)">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Technician Notes for Customer</h3>
+                    <div>
+                        <label for="technician-notes">Add or update notes visible to the customer:</label>
+                        <textarea id="technician-notes" name="technicianNotes" rows="4" placeholder="e.g., Found wear on front brake pads, recommend replacement soon. Parts for current repair are on order.">Awaiting parts for brake replacement, expected arrival by 3:00 PM. Rear brake pads have about 20% life remaining.</textarea>
+                    </div>
+                </section>
+
+                <section class="pt-6 border-t border-gray-200">
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm transition-colors duration-150">
+                            Cancel
+                        </button>
+                        <button type="submit" id="saveProgressBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-md shadow-sm transition-colors duration-150">
+                            Save & Update Progress
+                        </button>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </main>
+
+    <footer class="text-center p-4 text-gray-600 mt-8 text-sm">
+        © <span id="current-year">2023</span> MechanicApp Staff Portal. For internal use only.
+    </footer>
+
+    <script>
+        // Set the current year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Custom message box function (replaces alert())
+        function showMessage(message, type = 'success', duration = 3000) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.className = 'show'; // Reset classes
+            if (type === 'success') {
+                msgBox.style.backgroundColor = '#4CAF50'; // Green
+            } else if (type === 'error') {
+                msgBox.style.backgroundColor = '#f44336'; // Red
+            } else {
+                msgBox.style.backgroundColor = '#2196F3'; // Blue (info)
+            }
+
+            setTimeout(() => {
+                msgBox.className = ''; // Hide after duration
+            }, duration);
+        }
+
+        const tasksContainer = document.getElementById('tasksContainer');
+        const addNewTaskBtn = document.getElementById('addNewTaskBtn');
+        const updateServiceForm = document.getElementById('updateServiceForm');
+        // Initialize taskCounter based on existing tasks in the HTML
+        let taskCounter = tasksContainer.getElementsByClassName('task-item').length;
+
+        // --- Load existing service data (Simulated) ---
+        // In a real application, you would fetch this data based on the service order ID
+        // and populate the form fields accordingly.
+        const mockData = {
+            orderId: "SO-12345",
+            vehicleInfo: "2021 Toyota Camry (ABC-123)",
+            vin: "JT1BFRE0XML0XXXXX",
+            customerName: "John Customer",
+            serviceAdvisor: "Sarah Advisor",
+            dateIn: "2023-07-26 09:00 AM",
+            overallProgress: 75,
+            estimatedCompletion: "2023-07-26T17:00", // ISO format for datetime-local
+            tasks: [
+                { id: "task-1", name: "Initial Inspection & Diagnostics", status: "Completed", notes: "All systems nominal." },
+                { id: "task-2", name: "Oil Change and Filter Replacement", status: "InProgress", notes: "Used 5W-30 synthetic." },
+                { id: "task-3", name: "Tire Rotation", status: "Pending", notes: "" }
+            ],
+            technicianNotes: "Awaiting parts for brake replacement, expected arrival by 3:00 PM. Rear brake pads have about 20% life remaining."
+        };
+
+        function loadServiceData(data) {
+            document.getElementById('service-order-id').textContent = data.orderId;
+            document.getElementById('vehicle-info').textContent = data.vehicleInfo;
+            document.getElementById('vehicle-vin').textContent = data.vin;
+            document.getElementById('customer-name').textContent = data.customerName;
+            document.getElementById('service-advisor').textContent = data.serviceAdvisor;
+            document.getElementById('date-in').textContent = data.dateIn;
+            document.getElementById('overall-progress').value = data.overallProgress;
+            document.getElementById('estimated-completion').value = data.estimatedCompletion;
+            document.getElementById('technician-notes').value = data.technicianNotes;
+
+            // Clear existing static tasks and re-render from mockData
+            tasksContainer.innerHTML = '';
+            taskCounter = 0; // Reset counter for dynamic task generation
+            data.tasks.forEach(taskData => addNewTask(taskData, false)); // Add without making name editable
+        }
+
+        // Function to add a new task row to the form
+        function addNewTask(initialData = null, isNewEditable = true) {
+            taskCounter++;
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'task-item p-4 bg-gray-50 rounded-md border border-gray-200';
+
+            const taskName = initialData ? initialData.name : '';
+            const taskStatus = initialData ? initialData.status : 'Pending';
+            const taskNotes = initialData ? initialData.notes : '';
+            const taskNameReadonly = initialData && !isNewEditable ? 'readonly' : '';
+            const taskNameBg = initialData && !isNewEditable ? 'bg-gray-100' : '';
+
+            taskDiv.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                    <div class="md:col-span-5">
+                        <label for="task-name-${taskCounter}">Task Name:</label>
+                        <input type="text" id="task-name-${taskCounter}" name="tasks[${taskCounter-1}][name]" value="${taskName}" class="${taskNameBg}" ${taskNameReadonly} placeholder="Enter task description" required>
+                    </div>
+                    <div class="md:col-span-3">
+                        <label for="task-status-${taskCounter}">Status:</label>
+                        <select id="task-status-${taskCounter}" name="tasks[${taskCounter-1}][status]">
+                            <option value="Pending" ${taskStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="InProgress" ${taskStatus === 'InProgress' ? 'selected' : ''}>In Progress</option>
+                            <option value="Completed" ${taskStatus === 'Completed' ? 'selected' : ''}>Completed</option>
+                            <option value="OnHold" ${taskStatus === 'OnHold' ? 'selected' : ''}>On Hold</option>
+                            <option value="Cancelled" ${taskStatus === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-3">
+                        <label for="task-notes-${taskCounter}">Task Notes (Optional):</label>
+                        <input type="text" id="task-notes-${taskCounter}" name="tasks[${taskCounter-1}][notes]" value="${taskNotes}" placeholder="e.g., Replaced spark plugs">
+                    </div>
+                    <div class="md:col-span-1 flex items-end justify-center">
+                        <button type="button" class="removeTaskBtn text-red-500 hover:text-red-700 p-2 transition-colors duration-150" title="Remove Task">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+            tasksContainer.appendChild(taskDiv);
+            // Attach event listener to the new remove button
+            taskDiv.querySelector('.removeTaskBtn').addEventListener('click', function() {
+                taskDiv.remove();
+                // Re-index tasks after removal to ensure correct array submission
+                reindexTasks();
+            });
+        }
+
+        // Function to re-index task names for correct form submission after removal
+        function reindexTasks() {
+            const taskItems = tasksContainer.querySelectorAll('.task-item');
+            taskItems.forEach((item, index) => {
+                item.querySelectorAll('[name^="tasks["]').forEach(input => {
+                    const nameAttr = input.getAttribute('name');
+                    const newNameAttr = nameAttr.replace(/tasks\[\d+\]/, `tasks[${index}]`);
+                    input.setAttribute('name', newNameAttr);
+                });
+                // Update IDs as well for consistency, though not strictly necessary for form submission
+                item.querySelectorAll('[id^="task-name-"], [id^="task-status-"], [id^="task-notes-"]').forEach(input => {
+                    const idAttr = input.getAttribute('id');
+                    const newIdAttr = idAttr.replace(/-\d+/, `-${index + 1}`);
+                    input.setAttribute('id', newIdAttr);
+                });
+                item.querySelector('label[for^="task-name-"]').setAttribute('for', `task-name-${index + 1}`);
+                item.querySelector('label[for^="task-status-"]').setAttribute('for', `task-status-${index + 1}`);
+                item.querySelector('label[for^="task-notes-"]').setAttribute('for', `task-notes-${index + 1}`);
+            });
+            taskCounter = taskItems.length; // Update taskCounter to reflect current number of tasks
+        }
+
+
+        // Event listener for adding a new task
+        addNewTaskBtn.addEventListener('click', function() {
+            addNewTask(null, true); // Add a new, fully editable task
+        });
+
+        // Event listener for form submission
+        updateServiceForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(updateServiceForm);
+            const data = {};
+
+            // Manually construct the data object to handle the tasks array
+            for (let [key, value] of formData.entries()) {
+                if (key.startsWith('tasks[')) {
+                    // Extract index and field name from 'tasks[index][fieldName]'
+                    const match = key.match(/tasks\[(\d+)\]\[(\w+)\]/);
+                    if (match) {
+                        const index = parseInt(match[1]);
+                        const fieldName = match[2];
+                        if (!data.tasks) {
+                            data.tasks = [];
+                        }
+                        if (!data.tasks[index]) {
+                            data.tasks[index] = {};
+                        }
+                        data.tasks[index][fieldName] = value;
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            console.log("Form Data to be submitted:", JSON.stringify(data, null, 2));
+            showMessage("Progress Update Submitted (See console for data). In a real app, this would be sent to the server.", 'success');
+
+            // **TODO: Actual API call here**
+            // fetch('/api/update-service-progress', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(data)
+            // })
+            // .then(response => response.json())
+            // .then(result => {
+            //     console.log('Success:', result);
+            //     showMessage('Progress updated successfully!', 'success');
+            // })
+            // .catch(error => {
+            //     console.error('Error:', error);
+            //     showMessage('Error updating progress.', 'error');
+            // });
+        });
+
+        // Initial load of mock data when the page loads
+        window.onload = function() {
+            loadServiceData(mockData);
+        };
+    </script>
+</body>
+</html>

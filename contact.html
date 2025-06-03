@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - AutoCare Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-color: #f0f8ff; /* AliceBlue - soothing background */
+        }
+
+        /* Responsive images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-blue-50 shadow-md py-4">
+        <nav class="container mx-auto flex justify-between items-center px-4">
+            <a href="#" class="text-2xl font-bold text-blue-700 rounded-md p-2">AutoCare Pro</a>
+            <a href="#" class="text-gray-600 hover:text-blue-700 transition duration-300 rounded-md p-2">Back to Home</a>
+        </nav>
+    </header>
+
+    <section class="py-16 px-4 bg-gray-100 min-h-screen flex items-center justify-center">
+        <div class="container mx-auto text-center max-w-4xl">
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-800 mb-12 rounded-md p-2">Get in Touch with AutoCare Pro</h1>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-start justify-center">
+                <div class="lg:w-1/2 bg-white p-8 rounded-lg shadow-lg w-full">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Schedule Your Service</h2>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-left text-gray-700 text-sm font-bold mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Full Name" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-left text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="your@example.com" required>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-left text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="(123) 456-7890">
+                        </div>
+                        <div>
+                            <label for="service" class="block text-left text-gray-700 text-sm font-bold mb-2">Desired Service</label>
+                            <select id="service" name="service" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Select a Service</option>
+                                <option value="engine">Engine Diagnostics & Repair</option>
+                                <option value="oil">Oil Change & Fluid Check</option>
+                                <option value="brakes">Brake System Service</option>
+                                <option value="tires">Tire Rotation & Alignment</option>
+                                <option value="ac">AC System Recharge & Repair</option>
+                                <option value="battery">Battery Check & Replacement</option>
+                                <option value="other">Other (Please specify in message)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-left text-gray-700 text-sm font-bold mb-2">Additional Details / Message</label>
+                            <textarea id="message" name="message" rows="4" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tell us more about your vehicle and service needs..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105">
+                            Submit Service Request
+                        </button>
+                    </form>
+                </div>
+
+                <div class="lg:w-1/2 bg-white p-8 rounded-lg shadow-lg w-full">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Our Shop Details</h2>
+                    <div class="text-left text-gray-700 space-y-4">
+                        <p><strong>Address:</strong><br>123 Auto Lane, Service City, 12345</p>
+                        <p><strong>Phone:</strong><br><a href="tel:+1234567890" class="text-blue-600 hover:underline">+1 (234) 567-890</a></p>
+                        <p><strong>Email:</strong><br><a href="mailto:info@autocarepro.com" class="text-blue-600 hover:underline">info@autocarepro.com</a></p>
+                        <p><strong>Business Hours:</strong><br>
+                            Monday - Friday: 8:00 AM - 6:00 PM<br>
+                            Saturday: 9:00 AM - 3:00 PM<br>
+                            Sunday: Closed
+                        </p>
+                    </div>
+                    <div class="mt-8 rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://placehold.co/600x300/aed6f1/333333?text=Find+Us+On+Map" alt="Location Map" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2023 AutoCare Pro. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

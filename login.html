@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <form id="loginForm">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+            <div class="links">
+                <a href="#">Forgot Password?</a>
+                <span>|</span>
+                <a href="#">Sign Up</a>
+            </div>
+            <p id="message" class="message"></p>
+        </form>
+    </div>
+
+    <!-- Optional: Basic JavaScript for form submission feedback (no real login) -->
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const messageElement = document.getElementById('message');
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent actual form submission for this demo
+
+                const username = document.getElementById('username').value;
+                // In a real application, you would send this data to a server
+                // and handle the response.
+
+                if (username) {
+                    messageElement.textContent = `Login attempt for ${username}. (This is a demo, no actual login occurred.)`;
+                    messageElement.style.color = 'green';
+                } else {
+                    messageElement.textContent = 'Please enter a username.';
+                    messageElement.style.color = 'red';
+                }
+
+                // Clear message after a few seconds
+                setTimeout(() => {
+                    messageElement.textContent = '';
+                }, 5000);
+            });
+        }
+    </script>
+</body>
+</html>

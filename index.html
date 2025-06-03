@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Vehicle Servicing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/landing-page-styles/general.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/landing-page-styles/login.css">
+    <link rel="stylesheet" href="/landing-page-styles/signup.css">
+    <style>
+        
+        /* Hero section background image with soothing overlay */
+        .hero-background {
+            background-image: url('https://placehold.co/1920x1080/aed6f1/ffffff?text=Vehicle+Servicing'); /* Soothing blue */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(67, 100, 133, 0.6); /* Slightly darker, soothing blue overlay */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* General section padding */
+        section {
+            padding: 4rem 1rem;
+        }
+
+        /* Responsive images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="bg-blue-50 shadow-md py-4">
+        <nav class="container mx-auto flex flex-wrap justify-between items-center px-4">
+            <a href="#" class="text-2xl font-bold text-blue-700 rounded-md p-2">AutoCare Pro</a>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-700 focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="hidden w-full md:flex md:items-center md:w-auto bg-blue-700 md:bg-transparent mt-2 md:mt-0 rounded-lg md:rounded-none shadow-xl md:shadow-none">
+                <ul class="flex flex-col md:flex-row md:items-center md:space-x-6 w-full items-stretch py-3 md:py-0 space-y-1 md:space-y-0">
+                    <li><a href="#home" class="block text-blue-100 hover:text-white hover:bg-blue-600 md:text-gray-600 md:hover:text-blue-700 md:hover:bg-transparent transition-colors duration-150 rounded-md p-3 md:p-2 text-center md:text-left w-full">Home</a></li>
+                    <li><a href="#services" class="block text-blue-100 hover:text-white hover:bg-blue-600 md:text-gray-600 md:hover:text-blue-700 md:hover:bg-transparent transition-colors duration-150 rounded-md p-3 md:p-2 text-center md:text-left w-full">Services</a></li>
+                    <li><a href="#about" class="block text-blue-100 hover:text-white hover:bg-blue-600 md:text-gray-600 md:hover:text-blue-700 md:hover:bg-transparent transition-colors duration-150 rounded-md p-3 md:p-2 text-center md:text-left w-full">About Us</a></li>
+                    <li><a href="#why-choose-us" class="block text-blue-100 hover:text-white hover:bg-blue-600 md:text-gray-600 md:hover:text-blue-700 md:hover:bg-transparent transition-colors duration-150 rounded-md p-3 md:p-2 text-center md:text-left w-full">Why Choose Us</a></li>
+                    <li><a href="#testimonials" class="block text-blue-100 hover:text-white hover:bg-blue-600 md:text-gray-600 md:hover:text-blue-700 md:hover:bg-transparent transition-colors duration-150 rounded-md p-3 md:p-2 text-center md:text-left w-full">Testimonials</a></li>
+                    <li><a href="#contact" class="block text-blue-100 hover:text-white hover:bg-blue-600 md:text-gray-600 md:hover:text-blue-700 md:hover:bg-transparent transition-colors duration-150 rounded-md p-3 md:p-2 text-center md:text-left w-full">Contact</a></li>
+                    
+                    <!-- Auth buttons for mobile menu -->
+                    <li class="md:hidden w-full mt-4 pt-4 border-t border-blue-500 md:border-t-0 md:mt-0 md:pt-0">
+                        <div class="flex flex-col space-y-2 px-3 py-2">
+                            <a href="login.html" class="w-full px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 transition-all duration-300 shadow-sm">
+                                Log In
+                            </a>
+                            <a href="signup.html" class="w-full px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all duration-300 shadow-md">
+                                Sign Up
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Desktop Auth Buttons -->
+            <div class="hidden md:flex md:items-center space-x-3 md:space-x-4">
+                <a href="login.html" class="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-2xl hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 transition-all duration-300 shadow-sm">
+                    Log In
+                </a>
+                <a href="signup.html" class="px-4 py-2 bg-blue-600 text-white font-medium rounded-2xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-all duration-300 shadow-md">
+                    Sign Up
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero-background h-screen flex items-center justify-center text-white text-center px-4">
+        <div class="hero-content animate-fade-in">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 rounded-md p-2 animate-fade-in">
+                Your Vehicle, Our Priority
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl mb-8 max-w-2xl mx-auto rounded-md p-2 animate-fade-in" style="transition-delay: 0.2s;">
+                Experience unparalleled care and expertise for all your automotive needs.
+            </p>
+            <a href="contact.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-fade-in" style="transition-delay: 0.4s;">
+                Book a Service
+            </a>
+        </div>
+    </section>
+
+    <section id="services" class="bg-gray-100 py-16 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 animate-slide-up rounded-md p-2">Our Services</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 animate-fade-in">
+                    <img src="https://placehold.co/100x100/b2e0e0/333333?text=Engine" alt="Engine Repair" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Engine Diagnostics & Repair</h3>
+                    <p class="text-gray-600">Comprehensive engine checks and expert repairs to keep your vehicle running smoothly.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 animate-fade-in" style="transition-delay: 0.1s;">
+                    <img src="https://placehold.co/100x100/c7e9b0/333333?text=Oil" alt="Oil Change" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Oil Change & Fluid Check</h3>
+                    <p class="text-gray-600">Regular oil changes and fluid top-ups for optimal performance and longevity.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 animate-fade-in" style="transition-delay: 0.2s;">
+                    <img src="https://placehold.co/100x100/f7d9c4/333333?text=Brakes" alt="Brake Service" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Brake System Service</h3>
+                    <p class="text-gray-600">Ensure your safety with our thorough brake inspections and reliable repair services.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 animate-fade-in" style="transition-delay: 0.3s;">
+                    <img src="https://placehold.co/100x100/d4e6f1/333333?text=Tires" alt="Tire Services" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Tire Rotation & Alignment</h3>
+                    <p class="text-gray-600">Extend tire life and improve handling with our professional tire services.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 animate-fade-in" style="transition-delay: 0.4s;">
+                    <img src="https://placehold.co/100x100/e0c6e0/333333?text=AC" alt="AC Service" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">AC System Recharge & Repair</h3>
+                    <p class="text-gray-600">Stay cool and comfortable with our expert AC system maintenance and repairs.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 animate-fade-in" style="transition-delay: 0.5s;">
+                    <img src="https://placehold.co/100x100/f2e8c4/333333?text=Battery" alt="Battery Check" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Battery Check & Replacement</h3>
+                    <p class="text-gray-600">Reliable battery testing and replacement services to ensure your vehicle starts every time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="bg-white py-16 px-4">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2 animate-slide-up">
+                <img src="https://placehold.co/600x400/d1e7dd/333333?text=Our+Team" alt="Our Team" class="rounded-lg shadow-xl w-full">
+            </div>
+            <div class="lg:w-1/2 text-center lg:text-left animate-fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-6 rounded-md p-2">About AutoCare Pro</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    At AutoCare Pro, we are dedicated to providing top-notch vehicle servicing with a focus on quality, transparency, and customer satisfaction. With years of experience and a team of certified technicians, we ensure your vehicle receives the best care possible.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    Our mission is to build lasting relationships with our clients by offering reliable services and honest advice, making vehicle maintenance a hassle-free experience.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-choose-us" class="bg-gray-100 py-16 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 animate-slide-up rounded-md p-2">Why Choose Us?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg animate-scale-in">
+                    <img src="https://placehold.co/80x80/c1d8e0/333333?text=Expert" alt="Expert Technicians" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Certified Technicians</h3>
+                    <p class="text-gray-600">Our team consists of highly trained and certified professionals.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg animate-scale-in" style="transition-delay: 0.1s;">
+                    <img src="https://placehold.co/80x80/e0c1d8/333333?text=Quality" alt="Quality Parts" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Quality Parts & Equipment</h3>
+                    <p class="text-gray-600">We use only genuine parts and state-of-the-art diagnostic tools.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg animate-scale-in" style="transition-delay: 0.2s;">
+                    <img src="https://placehold.co/80x80/d8e0c1/333333?text=Transparent" alt="Transparent Pricing" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Transparent Pricing</h3>
+                    <p class="text-gray-600">No hidden costs, clear and upfront pricing for all services.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg animate-scale-in" style="transition-delay: 0.3s;">
+                    <img src="https://placehold.co/80x80/c1e0e0/333333?text=Customer" alt="Customer Satisfaction" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Customer Satisfaction</h3>
+                    <p class="text-gray-600">Your satisfaction is our top priority, guaranteed service.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg animate-scale-in" style="transition-delay: 0.4s;">
+                    <img src="https://placehold.co/80x80/e0d8c1/333333?text=Timely" alt="Timely Service" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Timely Service</h3>
+                    <p class="text-gray-600">Efficient and prompt service to get you back on the road quickly.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg animate-scale-in" style="transition-delay: 0.5s;">
+                    <img src="https://placehold.co/80x80/d8c1e0/333333?text=Warranty" alt="Service Warranty" class="mx-auto mb-4 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Service Warranty</h3>
+                    <p class="text-gray-600">We stand by our work with a comprehensive service warranty.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="bg-white py-16 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 animate-slide-up rounded-md p-2">What Our Customers Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md animate-fade-in">
+                    <p class="text-gray-700 italic mb-4">"AutoCare Pro provided excellent service for my car's engine. The team was professional and explained everything clearly. Highly recommended!"</p>
+                    <p class="font-semibold text-blue-700">- Jane Doe</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md animate-fade-in" style="transition-delay: 0.1s;">
+                    <p class="text-gray-700 italic mb-4">"I always bring my vehicle here for maintenance. Their brake service is top-notch, and the staff is always friendly and efficient."</p>
+                    <p class="font-semibold text-blue-700">- John Smith</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md animate-fade-in" style="transition-delay: 0.2s;">
+                    <p class="text-gray-700 italic mb-4">"Transparent pricing and quality work! AutoCare Pro is my go-to for all my car servicing needs. They truly care about their customers."</p>
+                    <p class="font-semibold text-blue-700">- Emily White</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-gray-100 py-16 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-12 animate-slide-up rounded-md p-2">Get in Touch</h2>
+            <div class="flex flex-col lg:flex-row gap-12 items-center justify-center">
+                <div class="lg:w-1/2 bg-white p-8 rounded-lg shadow-lg animate-fade-in">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Book Your Service Now</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-left text-gray-700 text-sm font-bold mb-2">Name</label>
+                            <input type="text" id="name" name="name" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-left text-gray-700 text-sm font-bold mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="your@example.com" required>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-left text-gray-700 text-sm font-bold mb-2">Phone</label>
+                            <input type="tel" id="phone" name="phone" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Your Phone Number">
+                        </div>
+                        <div>
+                            <label for="service" class="block text-left text-gray-700 text-sm font-bold mb-2">Preferred Service</label>
+                            <select id="service" name="service" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Select a Service</option>
+                                <option value="engine">Engine Diagnostics & Repair</option>
+                                <option value="oil">Oil Change & Fluid Check</option>
+                                <option value="brakes">Brake System Service</option>
+                                <option value="tires">Tire Rotation & Alignment</option>
+                                <option value="ac">AC System Recharge & Repair</option>
+                                <option value="battery">Battery Check & Replacement</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-left text-gray-700 text-sm font-bold mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" class="shadow appearance-none border rounded-md w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tell us about your needs..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105">
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
+                <div class="lg:w-1/2 text-center lg:text-left animate-slide-up">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Our Location & Hours</h3>
+                    <p class="text-gray-700 mb-2"><strong>Address:</strong> 123 Auto Lane, Service City, 12345</p>
+                    <p class="text-gray-700 mb-2"><strong>Phone:</strong> <a href="tel:+1234567890" class="text-blue-600 hover:underline">+1 (234) 567-890</a></p>
+                    <p class="text-gray-700 mb-2"><strong>Email:</strong> <a href="mailto:info@autocarepro.com" class="text-blue-600 hover:underline">info@autocarepro.com</a></p>
+                    <p class="text-gray-700 mb-4"><strong>Hours:</strong> Mon-Fri: 8:00 AM - 6:00 PM | Sat: 9:00 AM - 3:00 PM | Sun: Closed</p>
+                    <div class="mt-8 rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://placehold.co/600x300/aed6f1/333333?text=Find+Us+On+Map" alt="Location Map" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="container mx-auto text-center">
+            <p>© 2023 AutoCare Pro. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/main.js">
+       
+    </script>
+</body>
+</html>

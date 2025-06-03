@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="style.css"> <!-- Assuming you use the same style.css or adapt it -->
+</head>
+<body>
+    <div class="signup-container">
+        <form id="signupForm">
+            <h2>Create Account</h2>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+            </div>S
+            <button type="submit" class="signup-button">Sign Up</button>
+            <div class="links">
+                <span>Already have an account? </span><a href="login.html">Login</a>
+            </div>
+            <p id="message" class="message"></p>
+        </form>
+    </div>
+    <div>
+        <button>
+            create a new account
+        </button>
+    </div>
+
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        const messageElement = document.getElementById('message');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        if (signupForm) {
+            signupForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent actual form submission for this demo
+
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                messageElement.textContent = ''; // Clear previous messages
+                messageElement.style.color = 'red'; // Default to error color
+
+                if (!username || !email || !password || !confirmPassword) {
+                    messageElement.textContent = 'All fields are required.';
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    messageElement.textContent = 'Passwords do not match!';
+                    // Optionally, add error styling to password fields
+                    passwordInput.style.borderColor = 'red';
+                    confirmPasswordInput.style.borderColor = 'red';
+                    return;
+                } else {
+                    passwordInput.style.borderColor = '#ddd'; // Reset border color
+                    confirmPasswordInput.style.borderColor = '#ddd';
+                }
+
+                // Basic password strength (example: min 6 characters)
+                if (password.length < 6) {
+                    messageElement.textContent = 'Password must be at least 6 characters long.';
+                    passwordInput.style.borderColor = 'red';
+                    return;
+                } else {
+                    passwordInput.style.borderColor = '#ddd';
+                }
+
+
+                // If all validations pass (for this demo)
+                messageElement.textContent = `Account creation attempt for ${username}. (This is a demo, no account created.)`;
+                messageElement.style.color = 'green';
+
+                // In a real application, you would send data to a server here.
+                // Example:
+                // fetch('/api/signup', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ username, email, password })
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     if (data.success) {
+                //         messageElement.textContent = 'Account created successfully! Redirecting to login...';
+                //         messageElement.style.color = 'green';
+                //         setTimeout(() => window.location.href = 'login.html', 2000);
+                //     } else {
+                //         messageElement.textContent = data.message || 'Signup failed.';
+                //         messageElement.style.color = 'red';
+                //     }
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                //     messageElement.textContent = 'An error occurred. Please try again.';
+                //     messageElement.style.color = 'red';
+                // });
+
+
+                // Clear message after a few seconds
+                setTimeout(() => {
+                    messageElement.textContent = '';
+                }, 7000);
+            });
+        }
+    </script>
+</body>
+</html>
