@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Login & Dashboard</title>
+    <!-- Tailwind CSS CDN for utility classes (added for modern styling consistency) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- Combined CSS (style.css + dashboard_style.css + some adjustments) --- */
+
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; /* Changed to Inter for consistency with previous responses */
+            background-color: #f0f2f5; /* Light gray background, consistent with previous responses */
+            color: #333;
+            /* Removed flex centering for body as sections will control their layout */
+        }
+
+        .page-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* For header/footer structure within sections */
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1; /* Takes up space between header and footer */
+            padding: 20px;
+        }
+
+
+        /* --- Login Page Styles (from style.css) --- */
+        #loginPageSection .login-container { /* Specific to login page */
+            background-color: #ffffff;
+            padding: 2.5rem; /* Adjusted for consistency with previous login page padding */
+            border-radius: 1rem; /* Adjusted for consistency */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Adjusted for consistency */
+            width: 100%;
+            max-width: 400px;
+        }
+
+        #loginPageSection .login-container h2 {
+            text-align: center;
+            margin-bottom: 2rem; /* Adjusted for consistency */
+            color: #333;
+            font-size: 2.25rem; /* Adjusted for consistency */
+            font-weight: 700; /* Adjusted for consistency */
+        }
+
+        .form-group { /* Common form group style */
+            margin-bottom: 1.5rem; /* Adjusted for consistency */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem; /* Adjusted for consistency */
+            font-weight: 500; /* Adjusted for consistency */
+            color: #555;
+            font-size: 1rem; /* Adjusted for consistency */
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="email"] /* Added for potential future use */
+        {
+            width: 100%;
+            padding: 0.75rem 1rem; /* Adjusted for consistency */
+            border: 1px solid #d1d5db; /* Adjusted for consistency */
+            border-radius: 0.5rem; /* Adjusted for consistency */
+            font-size: 1rem; /* Adjusted for consistency */
+            color: #333; /* Adjusted for consistency */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Added transition */
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group input[type="email"]:focus {
+            outline: none;
+            border-color: #6366f1; /* Adjusted for consistency */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Adjusted for consistency */
+        }
+
+        /* Common button styles - can be overridden by more specific ones */
+        button, .button-primary {
+            width: 100%;
+            padding: 0.85rem 1.5rem; /* Adjusted for consistency */
+            background-color: #6366f1; /* Adjusted for consistency */
+            color: white;
+            border: none;
+            border-radius: 0.5rem; /* Adjusted for consistency */
+            font-size: 1.125rem; /* Adjusted for consistency */
+            font-weight: 600; /* Adjusted for consistency */
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out; /* Adjusted for consistency */
+            margin-top: 1.5rem; /* Added for consistency */
+        }
+
+        button:hover, .button-primary:hover {
+            background-color: #4f46e5; /* Adjusted for consistency */
+            transform: translateY(-2px); /* Adjusted for consistency */
+        }
+        button:active, .button-primary:active {
+            transform: translateY(0); /* Adjusted for consistency */
+        }
+
+        /* Message styling */
+        .message {
+            margin-top: 1.5rem; /* Adjusted for consistency */
+            padding: 0.75rem; /* Adjusted for consistency */
+            border-radius: 0.5rem; /* Adjusted for consistency */
+            text-align: center;
+            font-size: 1rem; /* Adjusted for consistency */
+            font-weight: 500; /* Adjusted for consistency */
+            border: 1px solid transparent; /* Base for border */
+        }
+
+        .message.success {
+            background-color: #dcfce7; /* Adjusted for consistency */
+            color: #16a34a; /* Adjusted for consistency */
+            border-color: #86efac; /* Adjusted for consistency */
+        }
+
+        .message.error {
+            background-color: #fee2e2; /* Adjusted for consistency */
+            color: #dc2626; /* Adjusted for consistency */
+            border-color: #fca5a5; /* Adjusted for consistency */
+        }
+
+
+        /* --- Dashboard Page Styles (from dashboard_style.css) --- */
+        .container { /* Re-usable container for content centering within dashboard sections */
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px; /* Adjusted for better spacing within sections */
+        }
+
+        /* Header & Footer Styles (common for dashboard) */
+        .site-header, .site-footer {
+            background-color: #1f2937; /* Darker gray for header/footer (Tailwind's gray-800) */
+            color: white;
+            padding: 1rem 0; /* Adjusted padding */
+            width: 100%; /* Ensure full width */
+        }
+        .site-header { box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .site-footer { text-align: center; margin-top: auto; } /* Pushes footer to bottom if content is short */
+        .site-footer p { margin: 0; font-size: 0.875rem; /* Adjusted font size */ color: #d1d5db; /* Lighter gray */ }
+
+
+        .site-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 700; /* Bold heading */
+        }
+
+        .site-header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.25rem; /* Adjusted margin */
+            padding: 0.5rem 1rem; /* Adjusted padding */
+            border-radius: 0.375rem; /* Slightly rounded corners */
+            transition: background-color 0.3s ease;
+        }
+
+        .site-header nav a:hover,
+        .site-header nav a.active {
+            background-color: #6366f1; /* Indigo for hover/active */
+        }
+
+        #dashboardPageSection .dashboard-content-area {
+            flex-grow: 1;
+            padding-top: 2rem; /* Adjusted padding */
+            padding-bottom: 2rem; /* Adjusted padding */
+            width: 100%; /* Ensure it takes full width for container to center */
+        }
+
+        #dashboardPageSection .dashboard-content-area h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2.5rem; /* Adjusted margin */
+            font-size: 2rem; /* Adjusted font size */
+            font-weight: 700; /* Bold heading */
+        }
+
+        /* Section Styling on Dashboard */
+        .slider-section, .vehicle-info-section {
+            background-color: #ffffff;
+            padding: 2rem; /* Adjusted padding */
+            border-radius: 0.75rem; /* More rounded corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem; /* Adjusted margin */
+        }
+
+        .slider-section h3, .vehicle-info-section h3 {
+            color: #6366f1; /* Indigo for section headings */
+            margin-top: 0;
+            margin-bottom: 1.25rem; /* Adjusted margin */
+            border-bottom: 2px solid #e5e7eb; /* Lighter border */
+            padding-bottom: 0.75rem; /* Adjusted padding */
+            font-size: 1.5rem; /* Adjusted font size */
+            font-weight: 600; /* Semi-bold */
+        }
+
+        /* Image Slider Styles */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 0.5rem; /* Rounded corners for slider */
+        }
+
+        .slide { display: none; }
+        .slide img { width: 100%; height: auto; display: block; border-radius: 0.5rem; }
+        .slide-caption {
+            color: #fff; font-size: 1.125rem; /* Adjusted font size */ padding: 0.75rem 1rem; /* Adjusted padding */
+            position: absolute; bottom: 0.5rem; width: calc(100% - 1rem); /* Adjusted width for padding */
+            left: 0.5rem; /* Added left for padding */
+            text-align: center; background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+            border-radius: 0.375rem; /* Rounded corners for caption */
+        }
+        .prev, .next {
+            cursor: pointer; position: absolute; top: 50%; width: auto;
+            padding: 1rem; /* Adjusted padding */ margin-top: -1.5rem; /* Adjusted margin */ color: white; font-weight: bold;
+            font-size: 1.5rem; /* Adjusted font size */ transition: 0.6s ease; border-radius: 0 0.375rem 0.375rem 0; /* Adjusted border radius */
+            user-select: none; background-color: rgba(0,0,0,0.4); /* Slightly darker background */
+        }
+        .next { right: 0; border-radius: 0.375rem 0 0 0.375rem; }
+        .prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
+        .dot {
+            cursor: pointer; height: 0.75rem; width: 0.75rem; margin: 0 0.25rem; /* Adjusted size and margin */
+            background-color: #d1d5db; /* Lighter gray dot */ border-radius: 50%; display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active-dot, .dot:hover { background-color: #6366f1; /* Indigo active/hover dot */ }
+        .fade { animation-name: fade; animation-duration: 1.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        /* Vehicle Info & Form Styles */
+        .vehicle-card {
+            background-color: #e0e7ff; /* Lighter indigo background */ border: 1px solid #c7d2fe; /* Lighter indigo border */
+            padding: 1.25rem; /* Adjusted padding */ border-radius: 0.5rem; /* Rounded corners */ margin-bottom: 1.5rem; /* Adjusted margin */
+        }
+        .vehicle-card p { margin: 0.5rem 0; color: #333; }
+        .vehicle-card strong { color: #4338ca; /* Darker indigo for strong text */ }
+
+        #addVehicleForm { /* Form within dashboard */
+            padding: 1.5rem; /* Adjusted padding */ border: 1px solid #e5e7eb; /* Lighter border */
+            border-radius: 0.5rem; /* Rounded corners */ background-color: #f9fafb; /* Very light gray */
+        }
+        #addVehicleForm h4 { margin-top: 0; margin-bottom: 1rem; /* Adjusted margin */ color: #333; font-size: 1.25rem; font-weight: 600; }
+        #addVehicleForm .form-group input[type="text"] { width: 100%; } /* Ensure full width within this form */
+
+
+        .form-actions {
+            margin-top: 1.5rem; /* Adjusted margin */
+            display: flex;
+            gap: 0.75rem; /* Adjusted gap */
+        }
+        /* Specific button styling within form-actions if needed, or use general button styles */
+        .form-actions button { width: auto; /* Allow buttons to size naturally or set specific widths */ }
+
+        .button-secondary {
+            background-color: #6b7280; /* Tailwind's gray-500 */
+        }
+        .button-secondary:hover {
+            background-color: #4b5563; /* Tailwind's gray-700 */
+        }
+        .small-btn {
+            font-size: 0.875rem; /* Smaller font size */
+            padding: 0.5rem 0.75rem; /* Smaller padding */
+            margin-top: 0.75rem; /* Adjusted margin */
+            width: auto; /* Override general button width */
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .site-header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .site-header h1 { margin-bottom: 0.75rem; }
+            .site-header nav { width: 100%; }
+            .site-header nav a {
+                display: block; margin-left: 0; margin-bottom: 0.5rem; text-align: center;
+            }
+            .slide-caption { font-size: 1rem; padding: 0.5rem 0.75rem; }
+            .prev, .next { font-size: 1.25rem; padding: 0.75rem; }
+
+            .form-actions {
+                flex-direction: column;
+            }
+            .form-actions button {
+                width: 100%; /* Stack buttons in form actions */
+            }
+            .form-actions button:not(:last-child) {
+                margin-bottom: 0.75rem; /* Adjusted margin */
+            }
+        }
+
+        @media (max-width: 480px) {
+            #loginPageSection .login-container { padding: 1.5rem; }
+            #loginPageSection .login-container h2 { font-size: 1.75rem; }
+
+            .form-group input[type="text"],
+            .form-group input[type="password"],
+            button { /* General inputs and buttons */
+                font-size: 0.9375rem;
+                padding: 0.625rem;
+            }
+
+            #dashboardPageSection .dashboard-content-area h2 { font-size: 1.5rem; }
+            .slider-section h3, .vehicle-info-section h3 { font-size: 1.125rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN PAGE SECTION -->
+    <div id="loginPageSection" class="page-section">
+        <div class="content-wrapper">
+            <div class="login-container">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                    <p id="loginMessageElement" class="message"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PAGE SECTION -->
+    <div id="dashboardPageSection" class="page-section" style="display: none;">
+        <header class="site-header">
+            <div class="container">
+                <h1>My Auto Services</h1>
+                <nav>
+                    <a href="#" id="dashboardNavDashboard" class="active">Dashboard</a>
+                    <a href="#" id="dashboardNavProfile">Profile</a> <!-- Placeholder -->
+                    <a href="#" id="dashboardLogoutButton">Logout</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="dashboard-content-area">
+            <div class="container"> <!-- Inner container for content -->
+                <h2>Welcome to Your Dashboard, <span id="dashboardUsername">User</span>!</h2>
+
+                <!-- Image Slider Section -->
+                <section class="slider-section">
+                    <h3>Our Services</h3>
+                    <div class="slider-container">
+                        <div class="slide fade">
+                            <img src="https://placehold.co/800x300/007bff/white?text=Full+Engine+Servicing" alt="Engine Servicing">
+                            <div class="slide-caption">Full Engine Servicing</div>
+                        </div>
+                        <div class="slide fade">
+                            <img src="https://placehold.co/800x300/28a745/white?text=Tire+Alignment+&+Balancing" alt="Tire Services">
+                            <div class="slide-caption">Tire Alignment & Balancing</div>
+                        </div>
+                        <div class="slide fade">
+                            <img src="https://placehold.co/800x300/ffc107/black?text=Oil+Change+&+Filter" alt="Oil Change">
+                            <div class="slide-caption">Oil Change & Filter Replacement</div>
+                        </div>
+                        <div class="slide fade">
+                            <img src="https://placehold.co/800x300/dc3545/white?text=Brake+System+Check" alt="Brake Check">
+                            <div class="slide-caption">Comprehensive Brake System Check</div>
+                        </div>
+                        <a class="prev" onclick="spaPlusSlides(-1)">❮</a>
+                        <a class="next" onclick="spaPlusSlides(1)">❯</a>
+                    </div>
+                    <div style="text-align:center; margin-top: 10px;">
+                        <span class="dot" onclick="spaCurrentSlide(1)"></span>
+                        <span class="dot" onclick="spaCurrentSlide(2)"></span>
+                        <span class="dot" onclick="spaCurrentSlide(3)"></span>
+                        <span class="dot" onclick="spaCurrentSlide(4)"></span>
+                    </div>
+                </section>
+
+                <!-- Vehicle Information Section -->
+                <section class="vehicle-info-section">
+                    <h3>Your Vehicle Details</h3>
+                    <div id="vehicleDetailsDisplay" class="vehicle-card" style="display: none;">
+                        <p><strong>Type:</strong> <span id="displayVehicleType"></span></p>
+                        <p><strong>Model:</strong> <span id="displayVehicleModel"></span></p>
+                        <p><strong>Number:</strong> <span id="displayVehicleNumber"></span></p>
+                        <button id="editVehicleBtn" class="small-btn button-secondary">Edit Details</button>
+                    </div>
+
+                    <div id="noVehicleMessage" style="display: none;">
+                        <p>You haven't added any vehicle details yet.</p>
+                        <button id="showAddVehicleFormBtn" class="button-primary">Add Your Vehicle</button>
+                    </div>
+
+                    <form id="addVehicleForm" style="display: none;">
+                        <h4>Add/Update Vehicle Information</h4>
+                        <div class="form-group">
+                            <label for="vehicleType">Vehicle Type (e.g., Car, Bike):</label>
+                            <input type="text" id="vehicleType" name="vehicleType" placeholder="e.g., Sedan, SUV, Hatchback">
+                        </div>
+                        <div class="form-group">
+                            <label for="modelName">Model Name:</label>
+                            <input type="text" id="modelName" name="modelName" placeholder="e.g., Honda Civic, Yamaha R15">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleNumber">Vehicle Number:</label>
+                            <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="e.g., MH01AB1234">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit">Save Vehicle</button>
+                            <button type="button" id="cancelAddVehicleBtn" class="button-secondary">Cancel</button>
+                        </div>
+                        <p id="vehicleFormMessage" class="message"></p>
+                    </form>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>© 2023 My Auto Services. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // --- Combined JavaScript (login_script.js + dashboard_script.js + SPA logic) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Page Sections ---
+            const loginPageSection = document.getElementById('loginPageSection');
+            const dashboardPageSection = document.getElementById('dashboardPageSection');
+
+            // --- Login Page Elements ---
+            const loginForm = document.getElementById('loginForm');
+            const loginMessageElement = document.getElementById('loginMessageElement');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const dashboardUsernameSpan = document.getElementById('dashboardUsername');
+
+            // --- Dashboard Page Elements ---
+            // Vehicle Info
+            const vehicleDetailsDisplay = document.getElementById('vehicleDetailsDisplay');
+            const displayVehicleType = document.getElementById('displayVehicleType');
+            const displayVehicleModel = document.getElementById('displayVehicleModel');
+            const displayVehicleNumber = document.getElementById('displayVehicleNumber');
+            const noVehicleMessage = document.getElementById('noVehicleMessage');
+            const showAddVehicleFormBtn = document.getElementById('showAddVehicleFormBtn');
+            const addVehicleForm = document.getElementById('addVehicleForm');
+            const editVehicleBtn = document.getElementById('editVehicleBtn');
+            const vehicleTypeInput = document.getElementById('vehicleType');
+            const modelNameInput = document.getElementById('modelName');
+            const vehicleNumberInput = document.getElementById('vehicleNumber');
+            const cancelAddVehicleBtn = document.getElementById('cancelAddVehicleBtn');
+            const vehicleFormMessage = document.getElementById('vehicleFormMessage');
+            const dashboardLogoutButton = document.getElementById('dashboardLogoutButton');
+
+            const localStorageKeyVehicle = 'userVehicleDetails_spa'; // Use a unique key for SPA version
+
+            // --- SPA Navigation Logic ---
+            /**
+             * Shows the specified page section and hides others.
+             * @param {string} pageId - The ID of the page section to show ('login' or 'dashboard').
+             */
+            function showPage(pageId) {
+                loginPageSection.style.display = 'none';
+                dashboardPageSection.style.display = 'none';
+
+                if (pageId === 'login') {
+                    loginPageSection.style.display = 'flex'; // Use flex to center content
+                } else if (pageId === 'dashboard') {
+                    dashboardPageSection.style.display = 'flex'; // Use flex for dashboard layout
+                    // Initialize or refresh dashboard specific things if needed
+                    spaLoadVehicleDetails(); // Load vehicle details when dashboard is shown
+                    spaShowSlides(spaSlideIndex); // Ensure slider is correctly displayed
+                }
+            }
+
+            // --- Login Logic ---
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent default form submission
+                    const username = usernameInput.value.trim();
+                    const password = passwordInput.value.trim();
+
+                    loginMessageElement.textContent = ''; // Clear previous messages
+                    loginMessageElement.className = 'message'; // Reset classes
+
+                    if (username === 'user' && password === 'password') { // Dummy validation
+                        loginMessageElement.textContent = `Login successful for ${username}! Redirecting...`;
+                        loginMessageElement.classList.add('success');
+                        if (dashboardUsernameSpan) dashboardUsernameSpan.textContent = username; // Set dashboard username
+
+                        setTimeout(() => {
+                            showPage('dashboard'); // Transition to dashboard
+                            loginMessageElement.textContent = ''; // Clear login message after redirect
+                            loginForm.reset(); // Reset login form fields
+                        }, 1500); // Wait for 1.5 seconds before redirecting
+                    } else if (!username || !password) { // Check for empty fields
+                        loginMessageElement.textContent = 'Please enter both username and password.';
+                        loginMessageElement.classList.add('error');
+                    } else { // Invalid credentials
+                        loginMessageElement.textContent = 'Invalid username or password. Please try again.';
+                        loginMessageElement.classList.add('error');
+                    }
+
+                    // Clear error messages after a delay if they are displayed
+                    if (!username || !password || (username !== 'user' || password !== 'password')) {
+                        setTimeout(() => {
+                            loginMessageElement.textContent = '';
+                            loginMessageElement.className = 'message';
+                        }, 5000); // Clear message after 5 seconds
+                    }
+                });
+            }
+
+            // --- Dashboard Logout Logic ---
+            if (dashboardLogoutButton) {
+                dashboardLogoutButton.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    // Optionally clear any session-like data from localStorage here if needed
+                    // For a real app, you might also clear the vehicle details:
+                    // localStorage.removeItem(localStorageKeyVehicle);
+                    if (dashboardUsernameSpan) dashboardUsernameSpan.textContent = "User"; // Reset username display
+                    showPage('login'); // Go back to the login page
+                });
+            }
+
+
+            // --- Image Slider Logic (Dashboard - prefixed with spa to avoid conflicts) ---
+            let spaSlideIndex = 1;
+
+            /**
+             * Changes the slide by a given number (n).
+             * @param {number} n - The number of slides to move (e.g., 1 for next, -1 for previous).
+             */
+            window.spaPlusSlides = function(n) { // Expose to global scope for onclick attributes in HTML
+                spaShowSlides(spaSlideIndex += n);
+            }
+
+            /**
+             * Sets the current slide to a specific index.
+             * @param {number} n - The index of the slide to show.
+             */
+            window.spaCurrentSlide = function(n) { // Expose to global scope for onclick attributes in HTML
+                spaShowSlides(spaSlideIndex = n);
+            }
+
+            /**
+             * Displays the current slide and updates the dots.
+             * @param {number} n - The current slide index.
+             */
+            function spaShowSlides(n) {
+                let i;
+                // Query elements dynamically or ensure they are available when this function runs
+                let slides = dashboardPageSection.getElementsByClassName("slide");
+                let dots = dashboardPageSection.getElementsByClassName("dot");
+
+                if (!slides.length || !dots.length) return; // Exit if elements are not found
+
+                // Handle wrapping around the slider
+                if (n > slides.length) { spaSlideIndex = 1 }
+                if (n < 1) { spaSlideIndex = slides.length }
+
+                // Hide all slides
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                // Deactivate all dots
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active-dot", "");
+                }
+                // Display the current slide and activate its corresponding dot
+                slides[spaSlideIndex - 1].style.display = "block";
+                dots[spaSlideIndex - 1].className += " active-dot";
+            }
+            // Auto-cycle slides (optional, uncomment to enable)
+            // setInterval(() => {
+            //     if(dashboardPageSection.style.display !== 'none') { // Only auto-cycle if dashboard is visible
+            //         spaPlusSlides(1);
+            //     }
+            // }, 5000);
+
+
+            // --- Vehicle Information Logic (Dashboard - prefixed with spa) ---
+            /**
+             * Loads vehicle details from local storage and updates the display.
+             */
+            function spaLoadVehicleDetails() {
+                const savedDetails = localStorage.getItem(localStorageKeyVehicle);
+                if (savedDetails) {
+                    const vehicle = JSON.parse(savedDetails);
+                    displayVehicleType.textContent = vehicle.type;
+                    displayVehicleModel.textContent = vehicle.model;
+                    displayVehicleNumber.textContent = vehicle.number;
+
+                    vehicleDetailsDisplay.style.display = 'block'; // Show vehicle details
+                    noVehicleMessage.style.display = 'none'; // Hide "no vehicle" message
+                    addVehicleForm.style.display = 'none'; // Hide form
+                } else {
+                    vehicleDetailsDisplay.style.display = 'none'; // Hide vehicle details
+                    noVehicleMessage.style.display = 'block'; // Show "no vehicle" message
+                    addVehicleForm.style.display = 'none'; // Hide form
+                }
+                spaClearVehicleFormMessage(); // Clear any messages on load
+            }
+
+            /**
+             * Shows the add/edit vehicle form and populates it if editing.
+             * @param {boolean} isEditing - True if editing existing details, false for new entry.
+             */
+            function spaShowVehicleForm(isEditing = false) {
+                noVehicleMessage.style.display = 'none';
+                vehicleDetailsDisplay.style.display = 'none';
+                addVehicleForm.style.display = 'block'; // Show the form
+
+                if (isEditing) {
+                    const savedDetails = JSON.parse(localStorage.getItem(localStorageKeyVehicle));
+                    if (savedDetails) {
+                        vehicleTypeInput.value = savedDetails.type;
+                        modelNameInput.value = savedDetails.model;
+                        vehicleNumberInput.value = savedDetails.number;
+                    }
+                } else {
+                    addVehicleForm.reset(); // Clear form fields for new entry
+                }
+                spaClearVehicleFormMessage(); // Clear any previous form messages
+            }
+
+            /**
+             * Hides the add/edit vehicle form and reloads vehicle details display.
+             */
+            function spaHideVehicleForm() {
+                addVehicleForm.style.display = 'none'; // Hide the form
+                spaLoadVehicleDetails(); // Refresh vehicle details display
+            }
+
+            /**
+             * Clears the vehicle form message element.
+             */
+            function spaClearVehicleFormMessage() {
+                vehicleFormMessage.textContent = '';
+                vehicleFormMessage.className = 'message'; // Reset classes
+            }
+
+            // Event listeners for vehicle details section
+            if (showAddVehicleFormBtn) {
+                showAddVehicleFormBtn.addEventListener('click', () => spaShowVehicleForm(false)); // Show form for new vehicle
+            }
+            if (editVehicleBtn) {
+                editVehicleBtn.addEventListener('click', () => spaShowVehicleForm(true)); // Show form for editing
+            }
+            if (cancelAddVehicleBtn) {
+                cancelAddVehicleBtn.addEventListener('click', spaHideVehicleForm); // Hide form on cancel
+            }
+
+            if (addVehicleForm) {
+                addVehicleForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent default form submission
+                    const type = vehicleTypeInput.value.trim();
+                    const model = modelNameInput.value.trim();
+                    const number = vehicleNumberInput.value.trim();
+
+                    if (type && model && number) {
+                        const vehicleDetails = { type, model, number };
+                        localStorage.setItem(localStorageKeyVehicle, JSON.stringify(vehicleDetails)); // Save to local storage
+
+                        vehicleFormMessage.textContent = 'Vehicle details saved successfully!';
+                        vehicleFormMessage.className = 'message success';
+
+                        setTimeout(() => {
+                            spaHideVehicleForm(); // Hide form and refresh display after success
+                        }, 1500);
+
+                    } else {
+                        vehicleFormMessage.textContent = 'Please fill in all vehicle fields.';
+                        vehicleFormMessage.className = 'message error';
+                        setTimeout(() => { spaClearVehicleFormMessage(); }, 3000); // Clear error after 3 seconds
+                    }
+                });
+            }
+
+            // --- Initial Page Load ---
+            showPage('login'); // Start with the login page when the DOM is fully loaded
+        });
+    </script>
+
+</body>
+</html>
