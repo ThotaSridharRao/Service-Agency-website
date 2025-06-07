@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: rgb(224,223,223);
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,26 +9,47 @@ body {
     min-height: 100vh; /* Ensure full viewport height */
 }
 
-/* You can use .login-container class for both login and signup for consistency,
-   or create a .signup-container class if you want specific styles for it.
-   For this example, I'll assume you might want to reuse the styles.
-   If you used .login-container in login.html, use it here too for the main box.
-   I've used .signup-container in the HTML, so I'll define it here.
-   It's often identical to .login-container.
-*/
-.signup-container, .login-container { /* Apply same styles to both */
-    background-color: #fff;
+.signup-container { /* Apply same styles to both */
+    background-color: whitesmoke;
     padding: 30px 40px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px; /* Max width of the box */
-    box-sizing: border-box;
+    max-width: 400px; /* Max width of the login box */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    position: relative;
 }
+.signup-container::after,
+    .signup-container::before {
+    --angle: 0deg;
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: conic-gradient(from var(--angle),transparent 75%, #28a745
+    );
+    border-radius: 15px;
+    z-index: -1;
+    animation: rotate 5s linear infinite;
+}
+.signup-container::before{
+    filter: blur(1.5rem);
+        opacity: 0.9;
+}
+@property --angle {
+        syntax: "<angle>";
+        initial-value: 0deg;
+        inherits: false;
+      }
+      
+      @keyframes rotate {
+        to {
+          --angle: 360deg;
+        }
+      }
+      
 
-.signup-container h2, .login-container h2 {
+.signup-container h2 {
     text-align: center;
-    color: #333;
+    color: black;
     margin-bottom: 25px;
 }
 
@@ -38,7 +59,7 @@ body {
 
 .input-group label {
     display: block;
-    color: #555;
+    color: black;
     margin-bottom: 8px;
     font-size: 0.9em;
 }
@@ -55,11 +76,11 @@ body {
 .input-group input:focus {
     outline: none;
     border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.05rem rgb(0, 123, 255);
 }
 
 /* Use a generic class for buttons or specific ones */
-.signup-button, .login-button {
+.signup-button{
     width: 100%;
     padding: 12px;
     background-color: #28a745; /* Green for signup, blue for login was used before */
@@ -72,16 +93,11 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.login-button { /* If you want a different color for login button */
-    background-color: #007bff;
-}
-.login-button:hover {
-    background-color: #0056b3;
-}
 
 
 .signup-button:hover {
-    background-color: #218838; /* Darker green for hover */
+    opacity: 80%;
+    scale: 1.05;
 }
 
 .links {
@@ -91,7 +107,7 @@ body {
 }
 
 .links a {
-    color: #007bff;
+    color: rgb(0, 162, 255);
     text-decoration: none;
     margin: 0 5px;
 }
@@ -101,7 +117,7 @@ body {
 }
 
 .links span {
-    color: #555; /* Adjusted for better visibility than #aaa */
+    color: black; /* Adjusted for better visibility than #aaa */
 }
 
 .message {
